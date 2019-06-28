@@ -9,7 +9,8 @@ new Vue({
 		estilo5: {
 			width: '100px',
 			height: '100px'
-		}
+		},
+		width: '0'
 	},
 	methods: {
 		iniciarEfeito() {
@@ -18,7 +19,12 @@ new Vue({
 			}, 1000)
 		},
 		iniciarProgresso() {
-
+			let valor = 0
+			const temporizador = setInterval(() => {
+				valor += 5
+				this.width = `${valor}%`
+				if (valor == 100) clearInterval(temporizador)
+			}, 500)
 		},
 		setPerigo(event) {
 			if (event.target.value == "true") {
