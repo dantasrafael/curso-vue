@@ -4,7 +4,9 @@
         <p><strong>Código:</strong> {{ id }}</p>
         <!-- :to="`/usuario/${id}/editar`" -->
         <router-link tag="button" primario 
-            :to="{ name: 'editarUsuario', params: { id } }">
+            :to="{ name: 'editarUsuario', params: { id },
+                query: { completo: true, lingua: 'pt' },
+                hash: '#rodape' }">
             Editar
         </router-link>
     </div>
@@ -12,7 +14,16 @@
 
 <script>
 export default {
-    props: ['id']
+    props: ['id'],
+    beforeRouteEnter(to, from, next) {
+        // console.log(this.id) NÃO FUNCIONA PQ O COMPONENTE AINDA NÃO FOI CRIADO
+        console.log('dentro do componente -> usuario detalhe')
+        //next(vm => {
+        //    console.log(this.id) 
+        //})
+        const autenticado = true
+        autenticado ? next() : next(false)
+    }
     /* data() {
         return {
             id: this.$route.params.id
