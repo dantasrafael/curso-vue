@@ -44,11 +44,15 @@ module.exports = app => {
 
             const rowsDeleted = await app.db('categories')
                 .where({ id: req.params.id }).del()
-            existsOrError(rowsDeleted, 'Categoria não foi encontrada.')
+            try {
+                existsOrError(rowsDeleted, 'Categoria não foi encontrada.')
+            } catch (msg) {
+                return res.status(400).send(msg)
+            }                
 
             res.status(204).send()
         } catch(msg) {
-            res.status(400).send(msg)
+            res.status(500).send(msg)
         }
     }
 
